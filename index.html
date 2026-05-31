@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marmara Games | İstanbul'un Dijital Dünyası</title>
+    <meta name="description" content="Marmara Games resmi web sitesi. Marmara Theft Auto V ve yeni nesil oyun projeleri yapım aşamasında.">
+    <style>
+        body { background: #000; color: #fff; font-family: 'Arial', sans-serif; text-align: center; padding: 50px; }
+        .logo { width: 200px; margin-bottom: 20px; }
+        .status { color: #FFD700; font-size: 24px; margin: 20px 0; }
+        .contact { margin-top: 40px; border-top: 1px solid #333; padding-top: 20px; }
+        .btn { display: inline-block; padding: 10px 20px; background: #FFD700; color: #000; text-decoration: none; border-radius: 5px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <img src="logo.jpg" alt="Marmara Games Logo" class="logo">
+    <h1>MARMARA GAMES™</h1>
+    <p class="status">🚧 Proje Yapım Aşamasında...</p>
+    
+    <div id="online-status">
+        <button onclick="showConfig()" class="btn">API Config Oluştur</button>
+        <pre id="config-output" style="background:#111; padding:20px; display:none; text-align:left;"></pre>
+    </div>
+
+    <div class="contact">
+        <p>İletişim: +90 551 001 47 48</p>
+        <a href="https://www.instagram.com/solidqxxl" class="btn">Instagram</a>
+        <a href="https://youtube.com/@marmaragames" class="btn">YouTube</a>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAFtCQjGACAmoOSEIazC648I1BaLPkT8-U",
+            authDomain: "share-your-thoughts-e15a7.firebaseapp.com",
+            databaseURL: "https://share-your-thoughts-e15a7-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "share-your-thoughts-e15a7",
+            storageBucket: "share-your-thoughts-e15a7.firebasestorage.app",
+            messagingSenderId: "137665399298",
+            appId: "1:137665399298:web:60e7087fc41db2670f751b"
+        };
+
+        function showConfig() {
+            const output = document.getElementById('config-output');
+            output.style.display = 'block';
+            output.innerText = JSON.stringify(firebaseConfig, null, 2);
+        }
+    </script>
+</body>
+</html>
