@@ -3,85 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <title>Marmara Games | Official Portal</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        // Firebase Yapılandırmanı Buraya Koy
+        const firebaseConfig = { /* ... firebaseConfig içeriğin ... */ };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        window.login = () => signInWithPopup(auth, provider);
+        window.logout = () => signOut(auth);
+
+        onAuthStateChanged(auth, (user) => {
+            const authBtn = document.getElementById('auth-btn');
+            if (user) {
+                authBtn.innerText = "ÇIKIŞ YAP (" + user.displayName + ")";
+                authBtn.onclick = logout;
+                document.getElementById('chat-input-zone').style.display = 'block';
+            } else {
+                authBtn.innerText = "GOOGLE İLE GİRİŞ";
+                authBtn.onclick = login;
+                document.getElementById('chat-input-zone').style.display = 'none';
+            }
+        });
+    </script>
     <style>
-        body { background: #0a0a0a; color: #fff; font-family: sans-serif; margin: 0; }
-        nav { padding: 20px; background: #000; border-bottom: 2px solid #FFD700; display: flex; gap: 20px; }
-        .section { padding: 40px; display: none; }
-        .disclaimer { border: 1px solid #FFD700; padding: 15px; margin: 10px 0; font-size: 14px; color: #ffcccc; }
-        #chat-box { height: 300px; overflow-y: scroll; border: 1px solid #333; padding: 10px; margin-bottom: 10px; }
+        :root { --gold: #FFD700; --bg: #0a0a0a; --card: #161616; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
+        
+        /* Şahane Buton Tasarımı */
+        .btn { background: transparent; border: 1px solid #333; color: white; padding: 12px 25px; 
+               border-radius: 5px; cursor: pointer; transition: 0.3s; font-weight: bold; text-transform: uppercase; }
+        .btn:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 15px rgba(255,215,0,0.2); }
+        
+        nav { padding: 30px; display: flex; gap: 15px; border-bottom: 1px solid #222; }
+        .section { display: none; padding: 40px; max-width: 900px; margin: auto; animation: fadeIn 0.5s; }
+        .active { display: block; }
+        
+        .chat-box { height: 400px; background: #000; border: 1px solid #222; padding: 20px; border-radius: 10px; overflow-y: scroll; }
+        .disclaimer { border-left: 3px solid var(--gold); padding: 15px; background: #111; margin-bottom: 20px; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <nav>
-    <button onclick="show('home')">ANA SAYFA</button>
-    <button onclick="show('video')">LİSANS VİDEOSU</button>
-    <button onclick="show('chat')">TOPLULUK CHAT</button>
+    <button class="btn" onclick="show('home')">ANA SAYFA</button>
+    <button class="btn" onclick="show('video')">SUNUM</button>
+    <button class="btn" onclick="show('chat')">TOPLULUK</button>
+    <button id="auth-btn" class="btn" style="margin-left:auto;">GOOGLE İLE GİRİŞ</button>
 </nav>
 
-<div id="home" class="section" style="display:block;">
+<div id="home" class="section active">
     <h1>MARMARA GAMES™</h1>
-    <div style="border:1px solid #333; padding:20px;">
-        <h3>Marmara Theft Auto V (MTAV)</h3>
-        <p>Durum: YAPIM AŞAMASINDA</p>
+    <div class="card">
+        <h3>MTAV - Yapım Aşamasında</h3>
+        <p>Gelişmiş AI ve fotogerçekçi İstanbul atmosferi.</p>
     </div>
 </div>
 
 <div id="video" class="section">
-    <video width="600" controls><source src="LICENSE.mp4" type="video/mp4"></video>
+    <video width="100%" controls><source src="LICENSE.mp4" type="video/mp4"></video>
 </div>
 
 <div id="chat" class="section">
-    <div id="disclaimer-area">
-        <div class="disclaimer">
-            ⚠️ <b>YASAL UYARI:</b> Terör, ayrımcılık, hakaret (belirtilen yasaklı kelimeler) paylaşımı kesinlikle yasaktır. 
-            Bu platformdaki tüm paylaşımlar kullanıcı sorumluluğundadır.
-        </div>
-        <button onclick="acceptRules()">Şartları Kabul Et ve Sohbete Gir</button>
+    <div class="disclaimer">
+        ⚠️ <b>DİKKAT:</b> Mesajlaşmak için giriş yapmalısınız. Küfür ve yasa dışı içerik paylaşanlar kalıcı olarak banlanır.
     </div>
-    
-    <div id="chat-area" style="display:none;">
-        <div id="chat-box"></div>
-        <input type="text" id="msgInput" placeholder="Mesajınız...">
-        <button onclick="sendMessage()">GÖNDER</button>
+    <div class="chat-box" id="chat-box"></div>
+    <div id="chat-input-zone" style="display:none; margin-top:20px;">
+        <input type="text" id="msgInput" style="width:80%; padding:10px; background:#111; color:white; border:1px solid #333;">
+        <button class="btn" onclick="sendMessage()">GÖNDER</button>
     </div>
 </div>
 
 <script>
-    // Yasaklı kelimeler listesi
-    const bannedWords = ["darbe", "darbeci", "kürt", "apo", "a p o", "piç", "p i ç", "yarrak", "göt", "got"];
-
-    function filterMessage(text) {
-        let msg = text.toLowerCase();
-        for (let word of bannedWords) {
-            if (msg.includes(word)) return null;
-        }
-        return text;
-    }
-
+    const banned = ["darbe","apo","piç","yarrak","göt"];
+    
     function sendMessage() {
-        let input = document.getElementById('msgInput');
-        let filtered = filterMessage(input.value);
-        
-        if (filtered) {
-            let div = document.createElement('div');
-            div.innerText = filtered;
-            document.getElementById('chat-box').appendChild(div);
-            input.value = "";
-        } else {
-            alert("Mesajınızda yasaklı içerik tespit edildi!");
+        let input = document.getElementById("msgInput");
+        if(banned.some(w => input.value.toLowerCase().includes(w))) {
+            alert("Yasaklı kelime!"); return;
         }
+        let div = document.createElement("div");
+        div.innerText = "Kullanıcı: " + input.value;
+        document.getElementById("chat-box").appendChild(div);
+        input.value = "";
     }
-
-    function acceptRules() {
-        document.getElementById('disclaimer-area').style.display = 'none';
-        document.getElementById('chat-area').style.display = 'block';
-    }
-
-    function show(id) {
-        document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-        document.getElementById(id).style.display = 'block';
+    
+    function show(id){
+        document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
     }
 </script>
+
 </body>
 </html>
