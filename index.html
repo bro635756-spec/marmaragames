@@ -3,279 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marmara Games | Official Portal</title>
+    <title>Marmara Games | Developer Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAFtCQjGACAmoOSEIazC648I1BaLPkT8-U",
-            authDomain: "share-your-thoughts-e15a7.firebaseapp.com",
-            databaseURL: "https://share-your-thoughts-e15a7-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "share-your-thoughts-e15a7",
-            storageBucket: "share-your-thoughts-e15a7.firebasestorage.app",
-            messagingSenderId: "137665399298",
-            appId: "1:137665399298:web:60e7087fc41db2670f751b"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        window.login = () => signInWithPopup(auth, provider).catch(e => console.error("Giriş iptal edildi veya hata:", e.message));
-        window.logout = () => signOut(auth);
-
-        onAuthStateChanged(auth, (user) => {
-            const authBtn = document.getElementById('auth-btn');
-            const guestOverlay = document.getElementById('guest-overlay');
-            const chatInputZone = document.getElementById('chat-input-zone');
-            
-            if (user) {
-                authBtn.innerHTML = `ÇIKIŞ YAP <span style="font-size: 0.8em; opacity: 0.7;">(${user.displayName.split(' ')[0]})</span>`;
-                authBtn.onclick = logout;
-                guestOverlay.style.display = 'none';
-                chatInputZone.style.display = 'flex';
-            } else {
-                authBtn.innerText = "GOOGLE İLE GİRİŞ";
-                authBtn.onclick = login;
-                guestOverlay.style.display = 'flex';
-                chatInputZone.style.display = 'none';
-            }
-        });
-    </script>
-
     <style>
-        /* CORE VARIABLES */
         :root {
-            --brand: #FFD700;
-            --bg-dark: #050505;
-            --surface: #111;
-            --surface-hover: #1a1a1a;
-            --text-main: #ffffff;
-            --text-muted: #888888;
-            --danger: #ff4444;
+            --gold: #FFD700;
+            --bg: #05070a;
+            --surface: #0e131f;
+            --border: #1e293b;
         }
 
-        /* RESET & BASE */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg-dark); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
+        body { background: var(--bg); color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* SCROLLBAR UX */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--brand); }
-
-        /* NAVBAR (Glassmorphism) */
+        /* NAV & HEADERS */
         nav {
-            position: sticky; top: 0; z-index: 100;
-            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-            padding: 15px 5%; display: flex; align-items: center; gap: 15px;
+            background: rgba(5, 7, 10, 0.85); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); padding: 15px 5%;
+            display: flex; align-items: center; gap: 15px; position: sticky; top: 0; z-index: 1000;
         }
-        
-        .nav-logo { font-weight: 800; font-size: 1.2rem; letter-spacing: 2px; color: var(--text-main); margin-right: auto; cursor: default;}
-        .nav-logo span { color: var(--brand); }
+        .logo { font-family: 'Orbitron', sans-serif; font-weight: 900; letter-spacing: 2px; color: #fff; margin-right: auto; }
+        .logo span { color: var(--gold); }
 
         /* PREMIUM BUTTONS */
         .btn {
-            background: transparent; color: var(--text-main);
-            border: 1px solid #333; padding: 10px 20px;
-            font-size: 0.9rem; font-weight: 600; letter-spacing: 1px;
-            border-radius: 4px; cursor: pointer; transition: all 0.3s ease;
-            text-transform: uppercase;
+            background: transparent; color: #fff; border: 1px solid var(--border);
+            padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; font-size: 0.85rem;
         }
-        .btn:hover, .btn.active-tab {
-            border-color: var(--brand); color: var(--brand);
-            background: rgba(255, 215, 0, 0.05);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+        .btn:hover, .btn.active {
+            border-color: var(--gold); color: var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+            background: rgba(255, 215, 0, 0.02);
         }
-        .btn-primary { background: var(--brand); color: #000; border: none; }
-        .btn-primary:hover { background: #e6c200; box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); color: #000; }
+        .btn-gold { background: var(--gold); color: #000; border: none; }
+        .btn-gold:hover { background: #e2be00; color: #000; box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
 
-        /* SECTIONS & ANIMATIONS */
-        .section {
-            display: none; padding: 60px 5%; max-width: 1200px; margin: 0 auto;
-            animation: fadeUp 0.4s ease forwards; opacity: 0; transform: translateY(15px);
-        }
+        /* SECTIONS */
+        .section { display: none; padding: 40px 5%; max-width: 1100px; margin: 0 auto; width: 100%; }
         .section.active { display: block; }
 
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
+        /* ROLE ANIMATIONS & BADGES */
+        .role-badge {
+            padding: 6px 12px; border-radius: 20px; font-weight: bold; font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem; letter-spacing: 1px; display: inline-block; margin-left: 10px;
         }
-
-        /* TYPOGRAPHY & CARDS */
-        h1 { font-size: 3rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 30px; text-transform: uppercase; }
         
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .card {
-            background: var(--surface); border: 1px solid #222; border-radius: 8px;
-            padding: 30px; transition: 0.3s; position: relative; overflow: hidden;
-        }
-        .card:hover { border-color: #444; transform: translateY(-5px); }
-        .badge {
-            position: absolute; top: 20px; right: 20px;
-            background: rgba(255, 215, 0, 0.1); color: var(--brand);
-            padding: 5px 10px; font-size: 0.75rem; font-weight: 600; border-radius: 4px; border: 1px solid rgba(255, 215, 0, 0.3);
-        }
+        /* admin: Altın Parlama */
+        .role-admin { background: rgba(255, 215, 0, 0.1); color: var(--gold); border: 1px solid var(--gold); animation: pulseGold 2s infinite; }
+        @keyframes pulseGold { 0%, 100% { box-shadow: 0 0 5px rgba(255,215,0,0.2); } 50% { box-shadow: 0 0 20px rgba(255,215,0,0.6); } }
 
-        /* VIDEO PLAYER UX */
-        .video-container {
-            width: 100%; max-width: 900px; margin: 0 auto;
-            border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            border: 1px solid #333;
-        }
-        video { width: 100%; display: block; background: #000; }
+        /* mertali: Siber Neon Parıltı */
+        .role-mertali { background: rgba(0, 242, 254, 0.1); color: #00f2fe; border: 1px solid #00f2fe; animation: cyberGlow 1.5s infinite alternate; }
+        @keyframes cyberGlow { from { box-shadow: 0 0 5px #00f2fe; text-shadow: 0 0 3px #00f2fe; } to { box-shadow: 0 0 20px #4facfe; text-shadow: 0 0 8px #4facfe; } }
 
-        /* CHAT UX */
-        .chat-container {
-            background: var(--surface); border: 1px solid #222; border-radius: 12px;
-            overflow: hidden; position: relative; display: flex; flex-direction: column; height: 600px;
-        }
-        .disclaimer {
-            background: rgba(255, 68, 68, 0.1); border-bottom: 1px solid rgba(255, 68, 68, 0.2);
-            padding: 15px 20px; font-size: 0.85rem; color: #ffaaaa; display: flex; gap: 10px; align-items: center;
-        }
-        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        /* yes (Geliştirici): Matrix Yeşili */
+        .role-yes { background: rgba(0, 255, 136, 0.1); color: #00ff88; border: 1px solid #00ff88; animation: neonGreen 2s infinite; }
+        @keyframes neonGreen { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; box-shadow: 0 0 10px rgba(0,255,136,0.4); } }
+
+        /* no: Devredışı Mat Stil */
+        .role-no { background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid #94a3b8; text-decoration: line-through; }
+
+        /* ban: Tehlike Kırmızı Titreme */
+        .role-ban { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; animation: glitchShake 0.3s infinite; }
+        @keyframes glitchShake { 0% { transform: translate(0) } 20% { transform: translate(-1px, 1px) } 40% { transform: translate(-1px, -1px) } 60% { transform: translate(1px, 1px) } 80% { transform: translate(1px, -1px) } 100% { transform: translate(0) } }
+
+        /* CHAT & AI INTERFACE */
+        .chat-container { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; height: 550px; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .chat-input-area { padding: 25px; background: #090d16; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+        .chat-input { flex: 1; background: var(--bg); border: 1px solid var(--border); color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 0.95rem; }
+        .chat-input:focus { outline: none; border-color: var(--gold); }
         
-        /* GUEST OVERLAY UX */
-        .guest-overlay {
-            position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
-            background: linear-gradient(transparent, var(--bg-dark) 40%);
-            backdrop-filter: blur(2px);
-            display: flex; justify-content: center; align-items: flex-end; padding-bottom: 25px; z-index: 10;
-        }
+        .msg-bubble { background: #131a2e; padding: 12px 16px; border-radius: 8px; max-width: 80%; width: fit-content; }
+        .msg-meta { font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        
+        /* GUEST OVERLAY */
+        .lock-overlay { position: absolute; inset: 0; background: rgba(5,7,10,0.85); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 10; flex-direction: column; gap: 15px; }
 
-        /* CHAT INPUT ZONE */
-        .chat-input-zone {
-            padding: 20px; background: #0a0a0a; border-top: 1px solid #222;
-            display: none; /* Default hidden for guests */ gap: 15px;
-        }
-        .chat-input {
-            flex: 1; background: #111; border: 1px solid #333; color: white;
-            padding: 15px 20px; border-radius: 8px; font-size: 1rem; transition: 0.3s;
-        }
-        .chat-input:focus { outline: none; border-color: var(--brand); background: #151515; }
-
-        /* MESSAGE BUBBLES */
-        .msg-bubble { background: #1a1a1a; padding: 12px 18px; border-radius: 8px; border-left: 3px solid var(--brand); width: fit-content; max-width: 80%; }
-        .msg-name { font-size: 0.75rem; color: var(--brand); font-weight: 600; margin-bottom: 5px; }
-        .msg-text { font-size: 0.95rem; line-height: 1.4; }
+        /* AI CONSOLE */
+        .ai-banner { background: rgba(255, 215, 0, 0.05); border: 1px dashed var(--gold); padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="nav-logo">MARMARA <span>GAMES</span></div>
-    <button class="btn active-tab" onclick="switchTab('home', this)">ANA SAYFA</button>
-    <button class="btn" onclick="switchTab('video', this)">VİDEO</button>
-    <button class="btn" onclick="switchTab('chat', this)">TOPLULUK</button>
-    <button id="auth-btn" class="btn" style="margin-left:auto;">GOOGLE İLE GİRİŞ</button>
+    <div class="logo">MARMARA <span>GAMES</span> <div id="user-role-display"></div></div>
+    <button class="btn active" id="tab-home">ANA SAYFA</button>
+    <button class="btn" id="tab-video">VİDEO</button>
+    <button class="btn" id="tab-chat">TOPLULUK</button>
+    <button class="btn btn-gold" id="auth-btn">YÜKLENİYOR...</button>
 </nav>
 
-<div id="home" class="section active">
-    <h1>PROJELERİMİZ</h1>
-    <div class="card-grid">
-        <div class="card">
-            <div class="badge">YAPIM AŞAMASINDA</div>
-            <h2 style="margin-bottom: 15px;">Marmara Theft Auto V</h2>
-            <p style="color: var(--text-muted); line-height: 1.6;">İstanbul'un dijital ikizi. HDRP destekli fotogerçekçi grafikler ve gelişmiş AI sistemleri ile yerli AAA deneyimi.</p>
+<div id="sec-home" class="section active">
+    <h1 style="font-family: 'Orbitron', sans-serif; margin-bottom: 20px;">DEVELOPER PORTAL</h1>
+    <div class="ai-banner">
+        <div>
+            <strong>Marmara Games AI Ecosystem</strong>
+            <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Sohbette @MAI sistemini kullanabilmek için yerel anahtar kütüğünü indirmeli ve sisteme doğrulatmalısınız.</p>
         </div>
-        <div class="card">
-            <div class="badge" style="color: #fff; border-color: #555; background: #222;">2027 VİZYONU</div>
-            <h2 style="margin-bottom: 15px;">Epic Mobile</h2>
-            <p style="color: var(--text-muted); line-height: 1.6;">Yeni nesil mobil aksiyon deneyimi. Planlama ve AR-GE aşamasındadır.</p>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" id="btn-download-ai">TXT İNDİR</button>
+            <input type="file" id="ai-file-input" style="display: none;" accept=".txt">
+            <button class="btn btn-gold" id="btn-load-ai">TXT DOĞRULA</button>
         </div>
     </div>
+    <button class="btn" id="btn-apply-dev" style="margin-top: 20px;">GELİŞTİRİCİ OLMAK İÇİN BAŞVUR</button>
 </div>
 
-<div id="video" class="section">
-    <div class="video-container">
-        <video controls>
-            <source src="./LICENSE.mp4" type="video/mp4">
-            Tarayıcınız video formatını desteklemiyor.
-        </video>
-    </div>
+<div id="sec-video" class="section">
+    <video style="width:100%; max-width:850px; border-radius:8px; border:1px solid var(--border);" controls>
+        <source src="./LICENSE.mp4" type="video/mp4">
+    </video>
 </div>
 
-<div id="chat" class="section">
+<div id="sec-chat" class="section">
     <div class="chat-container">
-        <div class="disclaimer">
-            <span>⚠️</span>
-            <span><b>YASAL UYARI:</b> Kurallara aykırı (küfür, terör, yasa dışı) içerik paylaşanlar kalıcı olarak sunucudan uzaklaştırılır. Tüm sorumluluk kullanıcıya aittir.</span>
+        <div class="lock-overlay" id="chat-lock">
+            <p id="lock-reason">Sohbeti görmek ve mesaj yazmak için giriş yapmalısınız.</p>
+            <button class="btn btn-gold" id="chat-lock-btn">GOOGLE İLE GİRİŞ YAP</button>
         </div>
-        
-        <div class="chat-messages" id="chat-box">
-            <div class="msg-bubble" style="border-left-color: #555;">
-                <div class="msg-name" style="color: #888;">Sistem</div>
-                <div class="msg-text">Marmara Games topluluk sunucusuna hoş geldiniz.</div>
-            </div>
-        </div>
-
-        <div class="guest-overlay" id="guest-overlay">
-            <button class="btn btn-primary" onclick="login()">SOHBETE KATILMAK İÇİN GİRİŞ YAP</button>
-        </div>
-
-        <div class="chat-input-zone" id="chat-input-zone">
-            <input type="text" id="msgInput" class="chat-input" placeholder="Topluluğa bir mesaj gönder..." onkeypress="handleEnter(event)">
-            <button class="btn btn-primary" onclick="sendMessage()">GÖNDER</button>
+        <div class="chat-messages" id="chat-box"></div>
+        <div class="chat-input-area">
+            <input type="text" id="msgInput" class="chat-input" placeholder="Mesaj yazın veya yapay zeka için @MAI ile başlayın...">
+            <button class="btn btn-gold" id="btn-send">GÖNDER</button>
         </div>
     </div>
 </div>
 
-<script>
-    // UX: Tab Değiştirme
-    function switchTab(id, btnElement) {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('nav .btn').forEach(b => b.classList.remove('active-tab'));
-        
-        document.getElementById(id).classList.add('active');
-        if(btnElement) btnElement.classList.add('active-tab');
-    }
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    // UX: Enter tuşu ile mesaj gönderme
-    function handleEnter(e) {
-        if (e.key === 'Enter') sendMessage();
-    }
+    const firebaseConfig = {
+        apiKey: "AIzaSyAFtCQjGACAmoOSEIazC648I1BaLPkT8-U",
+        authDomain: "share-your-thoughts-e15a7.firebaseapp.com",
+        databaseURL: "https://share-your-thoughts-e15a7-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "share-your-thoughts-e15a7",
+        storageBucket: "share-your-thoughts-e15a7.firebasestorage.app",
+        messagingSenderId: "137665399298",
+        appId: "1:137665399298:web:60e7087fc41db2670f751b"
+    };
 
-    // Yasaklı Kelime Filtresi
-    const bannedWords = ["darbe", "apo", "piç", "yarrak", "göt"];
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    let currentUserData = null;
+    let aiKey = ""; // TXT yüklendiğinde buraya dolacak
+
+    // COOP Hatalarını önlemek için güvenli giriş mekanizması
+    const handleLogin = async () => {
+        try {
+            await signInWithPopup(auth, provider);
+        } catch(e) {
+            console.log("Popup engellendi veya kapatıldı, Redirect deneniyor...", e.message);
+            await signInWithRedirect(auth, provider);
+        }
+    };
+
+    // UI Tab Yönetimi
+    const tabs = ['home', 'video', 'chat'];
+    tabs.forEach(tab => {
+        document.getElementById(`tab-${tab}`).onclick = () => {
+            tabs.forEach(t => {
+                document.getElementById(`sec-${t}`).classList.remove('active');
+                document.getElementById(`tab-${t}`).classList.remove('active');
+            });
+            document.getElementById(`sec-${tab}`).classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+        };
+    });
+
+    // Kullanıcı Durum Takibi ve Veritabanı Entegrasyonu
+    onAuthStateChanged(auth, async (user) => {
+        const authBtn = document.getElementById('auth-btn');
+        const chatLock = document.getElementById('chat-lock');
+        const userRoleDisplay = document.getElementById('user-role-display');
+
+        if (user) {
+            authBtn.innerText = "ÇIKIŞ YAP";
+            authBtn.onclick = () => signOut(auth);
+            chatLock.style.display = 'none';
+
+            // Firestore Kullanıcı Kartı Kontrolü
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+
+            if (!userSnap.exists()) {
+                currentUserData = { name: user.displayName, email: user.email, role: "guest" };
+                await setDoc(userRef, currentUserData);
+            } else {
+                currentUserData = userSnap.data();
+            }
+
+            // Rolü ve Ayrı CSS Sınıflarını Ekrana Basma
+            if(currentUserData.role && currentUserData.role !== 'guest') {
+                userRoleDisplay.innerHTML = `<span class="role-badge role-${currentUserData.role}">${currentUserData.role.toUpperCase()}</span>`;
+            } else {
+                userRoleDisplay.innerHTML = '';
+            }
+
+            if(currentUserData.role === 'ban') {
+                chatLock.style.display = 'flex';
+                document.getElementById('lock-reason').innerText = "BU HESAP KALICI OLARAK BANLANMIŞTIR.";
+                document.getElementById('chat-lock-btn').style.display = 'none';
+            }
+        } else {
+            authBtn.innerText = "GOOGLE İLE GİRİŞ";
+            authBtn.onclick = handleLogin;
+            document.getElementById('chat-lock-btn').onclick = handleLogin;
+            chatLock.style.display = 'flex';
+            document.getElementById('lock-reason').innerText = "Sohbeti görmek ve mesaj yazmak için giriş yapmalısınız.";
+            document.getElementById('chat-lock-btn').style.display = 'block';
+            userRoleDisplay.innerHTML = '';
+            currentUserData = null;
+        }
+    });
+
+    // Geliştirici Başvuru Butonu
+    document.getElementById('btn-apply-dev').onclick = async () => {
+        if(!auth.currentUser) return alert("Önce giriş yapmalısınız!");
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        await updateDoc(userRef, { role: "pending" });
+        alert("Başvurunuz alındı. Firebasenden onay bekliyor!");
+    };
+
+    // YASAKLI KELİME FİLTRESİ
+    const bannedWords = ["darbe", "darbeci", "kürt", "apo", "a p o", "piç", "p i ç", "yarrak", "göt", "got"];
+    const checkBadWords = (text) => {
+        let clean = text.toLowerCase();
+        return bannedWords.some(word => clean.includes(word));
+    };
+
+    // REAL-TIME CHAT KURUMLARI
+    const chatBox = document.getElementById('chat-box');
+    const q = query(collection(db, "messages"), orderBy("createdAt", "asc"));
     
-    function sendMessage() {
-        let input = document.getElementById("msgInput");
-        let text = input.value.trim();
-        if (!text) return;
+    onSnapshot(q, (snapshot) => {
+        chatBox.innerHTML = '';
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            const div = document.createElement('div');
+            div.className = 'msg-bubble';
+            div.style.marginBottom = "10px";
+            
+            let roleTag = data.role && data.role !== 'guest' ? `<span class="role-badge role-${data.role}" style="font-size:0.6rem; padding:2px 6px;">${data.role}</span>` : '';
+            
+            div.innerHTML = `
+                <div class="msg-meta">${data.userName} ${roleTag}</div>
+                <div class="msg-text">${data.text}</div>
+            `;
+            chatBox.appendChild(div);
+        });
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
 
-        let lowerText = text.toLowerCase();
-        if (bannedWords.some(w => lowerText.includes(w))) {
-            alert("Sistem: Mesajınız kurallara aykırı içerik barındırıyor.");
-            input.value = "";
+    // MESAJ GÖNDERME & @MAI TETİKLEMESİ
+    const sendMsg = async () => {
+        const input = document.getElementById('msgInput');
+        const text = input.value.trim();
+        if(!text || !auth.currentUser) return;
+
+        if(currentUserData && currentUserData.role === 'guest' && !aiKey) {
+            alert("Misafirler mesaj gönderemez, sadece okuyabilir!");
             return;
         }
 
-        // UX: Mesaj Balonu Oluşturma
-        let chatBox = document.getElementById("chat-box");
-        let div = document.createElement("div");
-        div.className = "msg-bubble";
-        
-        // Kullanıcı adını al (Giriş yapılmışsa auth objesinden çeker)
-        let userName = getAuth().currentUser ? getAuth().currentUser.displayName : "Kullanıcı";
-        
-        div.innerHTML = `
-            <div class="msg-name">${userName}</div>
-            <div class="msg-text">${text}</div>
-        `;
-        
-        chatBox.appendChild(div);
-        input.value = "";
-        
-        // UX: Otomatik olarak en aşağı kaydır
-        chatBox.scrollTop = chatBox.scrollHeight;
+        if(checkBadWords(text)) {
+            alert("Uygunsuz içerik tespit edildi ve engellendi!");
+            input.value = '';
+            return;
+        }
+
+        // Firestore'a Gönder
+        await addDoc(collection(db, "messages"), {
+            text: text,
+            uid: auth.currentUser.uid,
+            userName: auth.currentUser.displayName,
+            role: currentUserData ? currentUserData.role : 'guest',
+            createdAt: new Date()
+        });
+
+        input.value = '';
+
+        // Eğer mesaj AI tetiklemesi içeriyorsa (@MAI)
+        if(text.includes('@MAI')) {
+            if(!aiKey) {
+                alert("Yapay Zeka cevabı için önce ana sayradan marmaragamesai.txt dosyasını doğrulatmalısınız!");
+                return;
+            }
+            await callMarmaraAI(text.replace('@MAI', '').trim());
+        }
+    };
+
+    document.getElementById('btn-send').onclick = sendMsg;
+    document.getElementById('msgInput').onkeypress = (e) => { if(e.key === 'Enter') sendMsg(); };
+
+    // MARMARA GAMES AI DOSYA VE API SİSTEMİ (CORS ENGELSİZ)
+    document.getElementById('btn-download-ai').onclick = () => {
+        const blob = new Blob(["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"], { type: "text/plain;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "marmaragamesai.txt";
+        link.click();
+    };
+
+    const fileInput = document.getElementById('ai-file-input');
+    document.getElementById('btn-load-ai').onclick = () => fileInput.click();
+    
+    fileInput.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+            const extractedKey = evt.target.result.trim();
+            if(extractedKey.startsWith("sk-or-v1-")) {
+                aiKey = extractedKey;
+                alert("MarmaraGames AI Dosyası Başarıyla Doğrulandı! @MAI komutu aktif.");
+            } else {
+                alert("Geçersiz anahtar dosyası!");
+            }
+        };
+        reader.readAsText(file);
+    };
+
+    // OpenRouter Tabanlı AI Çağrısı
+    async function callMarmaraAI(prompt) {
+        try {
+            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${aiKey}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    model: "google/gemini-2.5-flash",
+                    messages: [{ role: "user", content: prompt }]
+                })
+            });
+            const result = await response.json();
+            const aiReply = result.choices[0].message.content;
+
+            await addDoc(collection(db, "messages"), {
+                text: aiReply,
+                uid: "marmara_ai_bot",
+                userName: "🤖 MARMARA AI",
+                role: "mertali", // AI botuna en yüksek neon stili veriyoruz
+                createdAt: new Date()
+            });
+        } catch (err) {
+            console.error("AI Hatası:", err);
+        }
     }
 </script>
-
 </body>
 </html>
