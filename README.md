@@ -8,6 +8,6 @@ Türkiye'nin en kapsamlı açık dünya oyun ekosistemini inşa ediyoruz.
 
 ## İletişim
 - 📞 +90 551 001 47 48
-- 🌐 [marmaragames.com](https://marmaragames.github.io/)
+- 🌐 (https://marmaragames.github.io/)
 
 *Yasal Uyarı: Bu portal üzerinde paylaşılan içerikler Marmara Games'e aittir. Topluluk sohbet kuralları için sitemizi ziyaret edin.*
