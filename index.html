@@ -2,31 +2,37 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marmara Games | İstanbul'un Dijital Dünyası</title>
-    <meta name="description" content="Marmara Games resmi web sitesi. Marmara Theft Auto V ve yeni nesil oyun projeleri yapım aşamasında.">
+    <title>Marmara Games | Official Website</title>
+    <meta name="google-site-verification" content="abCjERcKyUjNWGRna5PTgm3_UtdO_wiCimuJ4SEGgTs" />
     <style>
-        body { background: #000; color: #fff; font-family: 'Arial', sans-serif; text-align: center; padding: 50px; }
-        .logo { width: 200px; margin-bottom: 20px; }
-        .status { color: #FFD700; font-size: 24px; margin: 20px 0; }
-        .contact { margin-top: 40px; border-top: 1px solid #333; padding-top: 20px; }
-        .btn { display: inline-block; padding: 10px 20px; background: #FFD700; color: #000; text-decoration: none; border-radius: 5px; margin: 10px; }
+        /* Rockstar Games Estetiği */
+        body { margin: 0; background: #0a0a0a; color: #fff; font-family: 'Helvetica Neue', Arial, sans-serif; }
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('logo.jpg'); background-size: cover; text-align: center; }
+        h1 { font-size: 5rem; letter-spacing: -2px; margin: 0; text-transform: uppercase; }
+        .status { border: 1px solid #fff; padding: 10px 20px; margin-top: 20px; letter-spacing: 2px; }
+        
+        .footer { padding: 50px; text-align: center; background: #000; }
+        .social-link { color: #fff; text-decoration: none; margin: 0 15px; font-weight: bold; transition: 0.3s; }
+        .social-link:hover { color: #FFD700; }
+        
+        #config-output { background: #111; color: #0f0; padding: 20px; border: 1px solid #333; margin-top: 20px; display: none; }
+        button { background: #fff; border: none; padding: 15px 30px; cursor: pointer; font-weight: bold; margin-top: 20px; }
+        button:hover { background: #FFD700; }
     </style>
 </head>
 <body>
-    <img src="logo.jpg" alt="Marmara Games Logo" class="logo">
-    <h1>MARMARA GAMES™</h1>
-    <p class="status">🚧 Proje Yapım Aşamasında...</p>
-    
-    <div id="online-status">
-        <button onclick="showConfig()" class="btn">API Config Oluştur</button>
-        <pre id="config-output" style="background:#111; padding:20px; display:none; text-align:left;"></pre>
+
+    <div class="hero">
+        <h1>MARMARA GAMES</h1>
+        <div class="status">YAPIM AŞAMASINDA</div>
+        <button onclick="showConfig()">API CONFIG GÖRÜNTÜLE</button>
+        <pre id="config-output"></pre>
     </div>
 
-    <div class="contact">
-        <p>İletişim: +90 551 001 47 48</p>
-        <a href="https://www.instagram.com/solidqxxl" class="btn">Instagram</a>
-        <a href="https://youtube.com/@marmaragames" class="btn">YouTube</a>
+    <div class="footer">
+        <a href="https://www.instagram.com/solidqxxl" class="social-link">INSTAGRAM</a>
+        <a href="https://youtube.com/@marmaragames" class="social-link">YOUTUBE</a>
+        <p style="margin-top: 30px;">İletişim: +90 551 001 47 48</p>
     </div>
 
     <script>
@@ -39,11 +45,9 @@
             messagingSenderId: "137665399298",
             appId: "1:137665399298:web:60e7087fc41db2670f751b"
         };
-
         function showConfig() {
-            const output = document.getElementById('config-output');
-            output.style.display = 'block';
-            output.innerText = JSON.stringify(firebaseConfig, null, 2);
+            document.getElementById('config-output').style.display = 'block';
+            document.getElementById('config-output').innerText = JSON.stringify(firebaseConfig, null, 2);
         }
     </script>
 </body>
