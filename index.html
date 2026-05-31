@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <title>Marmara Games | Official Portal</title>
     <style>
-        body { background: #0a0a0a; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; }
-        nav { padding: 20px; display: flex; gap: 20px; background: #000; border-bottom: 2px solid #FFD700; }
-        .section { padding: 50px; text-align: center; }
-        .game-card { border: 1px solid #333; padding: 20px; display: inline-block; width: 300px; }
-        .disclaimer { background: #222; padding: 20px; border: 1px solid #FFD700; margin: 20px; font-size: 0.8em; }
-        .btn { padding: 10px 20px; background: #FFD700; color: #000; cursor: pointer; border: none; }
+        body { background: #0a0a0a; color: #fff; font-family: sans-serif; margin: 0; }
+        nav { padding: 20px; background: #000; border-bottom: 2px solid #FFD700; display: flex; gap: 20px; }
+        .section { padding: 40px; display: none; }
+        .disclaimer { border: 1px solid #FFD700; padding: 15px; margin: 10px 0; font-size: 14px; color: #ffcccc; }
+        #chat-box { height: 300px; overflow-y: scroll; border: 1px solid #333; padding: 10px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -18,36 +17,67 @@
     <button onclick="show('home')">ANA SAYFA</button>
     <button onclick="show('video')">LİSANS VİDEOSU</button>
     <button onclick="show('chat')">TOPLULUK CHAT</button>
-    <button onclick="show('blog')">HABERLER (BLOG)</button>
 </nav>
 
-<div id="home" class="section">
-    <h1>PROJELERİMİZ</h1>
-    <div class="game-card">
+<div id="home" class="section" style="display:block;">
+    <h1>MARMARA GAMES™</h1>
+    <div style="border:1px solid #333; padding:20px;">
         <h3>Marmara Theft Auto V (MTAV)</h3>
-        <p>Durum: Yapım Aşamasında</p>
-    </div>
-    <div class="game-card">
-        <h3>Yeni Nesil Epic Mobile</h3>
-        <p>Vizyon: 2027</p>
+        <p>Durum: YAPIM AŞAMASINDA</p>
     </div>
 </div>
 
-<div id="chat" class="section" style="display:none;">
-    <div class="disclaimer">
-        ⚠️ **YASAL UYARI:** Bu platformdaki mesajlardan Marmara Games yönetimi sorumlu değildir. Terör, suç veya yasa dışı içerik paylaşımı kesinlikle yasaktır. Mesaj yazan kullanıcı, tüm yasal sorumluluğu kabul eder.
+<div id="video" class="section">
+    <video width="600" controls><source src="LICENSE.mp4" type="video/mp4"></video>
+</div>
+
+<div id="chat" class="section">
+    <div id="disclaimer-area">
+        <div class="disclaimer">
+            ⚠️ <b>YASAL UYARI:</b> Terör, ayrımcılık, hakaret (belirtilen yasaklı kelimeler) paylaşımı kesinlikle yasaktır. 
+            Bu platformdaki tüm paylaşımlar kullanıcı sorumluluğundadır.
+        </div>
+        <button onclick="acceptRules()">Şartları Kabul Et ve Sohbete Gir</button>
     </div>
-    <button class="btn" onclick="acceptRules()">Şartları Kabul Et ve Sohbete Gir</button>
+    
     <div id="chat-area" style="display:none;">
-        <input type="text" id="msg" placeholder="Mesajınız...">
-        <button onclick="sendMsg()">GÖNDER</button>
+        <div id="chat-box"></div>
+        <input type="text" id="msgInput" placeholder="Mesajınız...">
+        <button onclick="sendMessage()">GÖNDER</button>
     </div>
 </div>
 
 <script>
+    // Yasaklı kelimeler listesi
+    const bannedWords = ["darbe", "darbeci", "kürt", "apo", "a p o", "piç", "p i ç", "yarrak", "göt", "got"];
+
+    function filterMessage(text) {
+        let msg = text.toLowerCase();
+        for (let word of bannedWords) {
+            if (msg.includes(word)) return null;
+        }
+        return text;
+    }
+
+    function sendMessage() {
+        let input = document.getElementById('msgInput');
+        let filtered = filterMessage(input.value);
+        
+        if (filtered) {
+            let div = document.createElement('div');
+            div.innerText = filtered;
+            document.getElementById('chat-box').appendChild(div);
+            input.value = "";
+        } else {
+            alert("Mesajınızda yasaklı içerik tespit edildi!");
+        }
+    }
+
     function acceptRules() {
+        document.getElementById('disclaimer-area').style.display = 'none';
         document.getElementById('chat-area').style.display = 'block';
     }
+
     function show(id) {
         document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
         document.getElementById(id).style.display = 'block';
