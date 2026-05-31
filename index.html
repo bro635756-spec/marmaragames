@@ -175,7 +175,7 @@
         };
     });
 
-    // Anlık Kullanıcı Rol ve Onay Durum Yönetimi (Realtime Database)
+    // Realtime Database Anlık Rol/Onay Dinleyicisi
     onAuthStateChanged(auth, (user) => {
         const authBtn = document.getElementById('auth-btn');
         const chatLock = document.getElementById('chat-lock');
@@ -188,7 +188,6 @@
 
             const userRef = ref(rtdb, 'users/' + user.uid);
             
-            // Panelden Değiştirildiğinde Anında UI Güncelleme Dinleyicisi
             onValue(userRef, (snapshot) => {
                 if (!snapshot.exists()) {
                     currentUserData = { name: user.displayName, email: user.email, role: "guest" };
@@ -228,14 +227,14 @@
     document.getElementById('btn-apply-dev').onclick = () => {
         if(!auth.currentUser) return alert("Önce giriş yapmalısınız!");
         update(ref(rtdb, 'users/' + auth.currentUser.uid), { role: "pending" });
-        alert("Başvurunuz Realtime Database üzerine iletildi. Onay bekleniyor!");
+        alert("Geliştirici başvurunuz Realtime Database'e iletildi!");
     };
 
-    // Filtre Sistemi
+    // Küfür Filtresi
     const bannedWords = ["darbe", "darbeci", "kürt", "apo", "a p o", "piç", "p i ç", "yarrak", "göt", "got"];
     const checkBadWords = (text) => bannedWords.some(word => text.toLowerCase().includes(word));
 
-    // Real-Time Chat Akışı
+    // Real-Time Chat Mesaj Akışı
     const chatBox = document.getElementById('chat-box');
     onValue(ref(rtdb, 'messages'), (snapshot) => {
         chatBox.innerHTML = '';
@@ -256,7 +255,7 @@
         chatBox.scrollTop = chatBox.scrollHeight;
     });
 
-    // Mesaj Gönderme & AI Entegrasyonu
+    // Mesaj Gönderme & AI Tetikleme
     const sendMsg = async () => {
         const input = document.getElementById('msgInput');
         const text = input.value.trim();
@@ -273,8 +272,7 @@
             return;
         }
 
-        const msgRef = ref(rtdb, 'messages');
-        push(msgRef, {
+        push(ref(rtdb, 'messages'), {
             text: text,
             uid: auth.currentUser.uid,
             userName: auth.currentUser.displayName,
@@ -296,15 +294,43 @@
     document.getElementById('btn-send').onclick = sendMsg;
     document.getElementById('msgInput').onkeypress = (e) => { if(e.key === 'Enter') sendMsg(); };
 
-    // CORS Engeli Olmadan TXT Okuma Yapısı
+    // SANKİ 2GB KOD VARMIŞ GİBİ SİBER METİN ÜRETEN ALGORİTMA
     document.getElementById('btn-download-ai').onclick = () => {
-        const blob = new Blob(["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"], { type: "text/plain;charset=utf-8" });
+        let heavyMatrixData = "/* ==========================================================================\n";
+        heavyMatrixData += "   MARMARA GAMES INC. AI CORE MACHINE LEARNING NEURAL NETWORK SYSTEMS V4.2\n";
+        heavyMatrixData += "   DANGER: UN-AUTHORIZED ACCESS WILL BE LOGGED BY DEFENSE SYSTEM RADARS.\n";
+        heavyMatrixData += "   ========================================================================== */\n\n";
+
+        const codeBlueprints = [
+            "void* __segment_ptr = malloc(sizeof(MarmaraNeuralNode) * 0x7FFFFFFF);",
+            "float4x4 mvp_target_tensor = mul(UNITY_MATRIX_VP, matrix_transformation_alloc);",
+            "if (__segment_ptr == nullptr) { asm { int 3 }; throw std::runtime_error(\"CRITICAL_AI_BUFFER_OVERFLOW\"); }",
+            "sys_call_kernel_interface(0x80, REGISTER_FLUSH_ASYNC_WAIT_SET | 0x000F4A9);",
+            "[MethodImpl(MethodImplOptions.AggressiveInlining)] private unsafe void ComputeWeights(byte* data) {",
+            "for(int idx = 0; idx < 1024; idx++) { tensor_weights[idx] ^= 0x5A; }",
+            "0x" + Math.random().toString(16).substring(2,10).toUpperCase() + " >> REALLOC_CORE_POOL_LOCK_MUTEX_BLOCK;"
+        ];
+
+        // 35.000 satırlık devasa bir kod bloğu döngüsü (Kullanıcı açtığında bitmeyecekmiş gibi durur)
+        for(let i = 0; i < 35000; i++) {
+            heavyMatrixData += codeBlueprints[i % codeBlueprints.length] + " // [HASH_REF_ID: " + btoa(i).substring(0,6) + "]\n";
+            
+            // Gerçek gizli API Anahtarını 17.500'üncü satıra çaktırmadan gömüyoruz
+            if(i === 17500) {
+                heavyMatrixData += "\n/* CORE_STREAM_AUTH_TOKEN_SEGMENT_VERIFICATION_HEX_VAL */\n";
+                heavyMatrixData += "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\n";
+                heavyMatrixData += "/* END_CORE_STREAM_AUTH_TOKEN_SEGMENT_VERIFICATION_HEX_VAL */\n\n";
+            }
+        }
+
+        const blob = new Blob([heavyMatrixData], { type: "text/plain;charset=utf-8" });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
         link.download = "marmaragamesai.txt";
         link.click();
     };
 
+    // TXT Geri Yüklendiğinde İçinden Regex ile Anahtarı Ayıklayan Yapı (CORS-Free)
     const fileInput = document.getElementById('ai-file-input');
     document.getElementById('btn-load-ai').onclick = () => fileInput.click();
     
@@ -313,18 +339,21 @@
         if (!file) return;
         const reader = new FileReader();
         reader.onload = (evt) => {
-            const extractedKey = evt.target.result.trim();
-            if(extractedKey.startsWith("sk-or-v1-")) {
-                aiKey = extractedKey;
-                alert("MarmaraGames AI Sistemi Doğrulandı! @MAI komutu aktif.");
+            const rawContent = evt.target.result;
+            // On binlerce satırın içinden anahtarı yakalar
+            const matchKey = rawContent.match(/sk-or-v1-[a-zA-Z0-9-]+/);
+            
+            if(matchKey) {
+                aiKey = matchKey[0];
+                alert("MarmaraGames Yapay Zeka Matrisi Başarıyla Çözüldü! @MAI Komutu Aktif.");
             } else {
-                alert("Geçersiz .txt anahtar dosyası!");
+                alert("Hata: Geçersiz veya manipüle edilmiş çekirdek dosyası!");
             }
         };
         reader.readAsText(file);
     };
 
-    // OpenRouter Yapay Zeka İstek Yapısı ve RTDB Kaydı
+    // OpenRouter Yapay Zeka API Çağrısı ve Yanıtı Veritabanına Yazma
     async function callMarmaraAI(prompt) {
         try {
             const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -345,7 +374,7 @@
                 text: aiReply,
                 uid: "marmara_ai_bot",
                 userName: "🤖 MARMARA AI",
-                role: "mertali",
+                role: "mertali", // Yapay zeka en parlak animasyon stilini taşır
                 createdAt: Date.now()
             });
         } catch (err) {
