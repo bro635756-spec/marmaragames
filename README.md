@@ -1,4 +1,4 @@
-![Logo Açıklaması](logo.png)
+![LOGO](logo.jpg)
 
 
 
