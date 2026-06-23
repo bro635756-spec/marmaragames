@@ -1,3 +1,7 @@
+![Logo Açıklaması](logo.png)
+
+
+
 # Marmara Games™ Official Portal
 
 Türkiye'nin en kapsamlı açık dünya oyun ekosistemini inşa ediyoruz. /MG\
@@ -12,7 +16,6 @@ Türkiye'nin en kapsamlı açık dünya oyun ekosistemini inşa ediyoruz. /MG\
 
 *Yasal Uyarı: Bu portal üzerinde paylaşılan içerikler Marmara Games'e aittir. Topluluk sohbet kuralları için sitemizi ziyaret edin.*
 
-logo.png
 
 
 @bro635756-spec
