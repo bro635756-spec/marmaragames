@@ -1,6 +1,9 @@
 ![LOGO](logo.jpg)
 
 
+<a href="https://github.com">
+  <img src="https://shields.iondir-blue?style=for-the-badge&logo=github" alt="ZIP İndir">
+</a>
 
 
 
@@ -10,7 +13,7 @@
 <video src="LICENSE.mp4" width="100%" controls></video>
 
 
-[Tüm Projeyi ZIP Olarak İndir](https://github.com/bro635756-spec/marmaragames)
+
 
 
 
