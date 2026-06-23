@@ -37,6 +37,9 @@
 ## 📞 İletişim & Destek
 *   **Tel:** `+90 551 001 47 48`
 *   **Web:** GÜNCELLENİYOR!
+*   **Adres** İzmir Selçuk Atatürk Mah / Sakarya Hendek Yenimahalle
+*   **Sistem sitesi bilgi** https://marmaragames.oneapp.dev
+*   **README.md Yazarı: Burak Dönmez**
 
 > **Yasal Uyarı:** Bu portal üzerinde paylaşılan içerikler Marmara Games'e aittir. Topluluk sohbet kuralları için sitemizi ziyaret edin.
 
