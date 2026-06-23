@@ -7,7 +7,10 @@
 
 [html dosyasına bak](https://github.com/bro635756-spec/marmaragames/raw/main/index.html)
 
-<video src="LICENSE.mp4" width="100%" controls></video>
+<video width="100%" controls>
+  <source src="https://github.com/bro635756-spec/marmaragames/raw/main/LICENSE.mp4" type="video/mp4">
+  Tarayıcınız video etiketini desteklemiyor.
+</video>
 
 
 
