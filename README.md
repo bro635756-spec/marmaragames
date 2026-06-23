@@ -12,6 +12,7 @@ Türkiye'nin en kapsamlı açık dünya oyun ekosistemini inşa ediyoruz. /MG\
 
 *Yasal Uyarı: Bu portal üzerinde paylaşılan içerikler Marmara Games'e aittir. Topluluk sohbet kuralları için sitemizi ziyaret edin.*
 
-^^010101010101100100101100011010101010010101101010100010010101001010000101011110010101001 qEU010210301301310010313131030^^
+logo.png
+
 
 @bro635756-spec
