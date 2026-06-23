@@ -22,8 +22,8 @@
 Türkiye'nin en kapsamlı açık dünya oyun ekosistemini inşa ediyoruz. /MG\
 
 ## Projelerimiz
-- **MTAV (Marmara Theft Auto V):** İstanbul'un dijital ikizi, fotogerçekçi açık dünya projesi.
-- **Epic Mobile (2027 Vizyonu):** Yeni nesil mobil deneyim.
+- **MTAV (Marmara Theft Auto V):**  # İstanbul'un dijital ikizi, fotogerçekçi açık dünya projesi. (2029)...
+- **Epic Mobile (2026 Vizyonu):** # Yeni nesil mobil deneyim.
 
 ## İletişim
 - 📞 +90 551 001 47 48
