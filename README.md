@@ -1,6 +1,6 @@
 # Marmara Games™ Official Portal
 
-Türkiye'nin en kapsamlı açık dünya oyun ekosistemini inşa ediyoruz.
+Türkiye'nin en kapsamlı açık dünya oyun ekosistemini inşa ediyoruz. /MG\
 
 ## Projelerimiz
 - **MTAV (Marmara Theft Auto V):** İstanbul'un dijital ikizi, fotogerçekçi açık dünya projesi.
@@ -8,6 +8,7 @@ Türkiye'nin en kapsamlı açık dünya oyun ekosistemini inşa ediyoruz.
 
 ## İletişim
 - 📞 +90 551 001 47 48
-- 🌐 https://bro635756-spec.github.io/MarmaraGames/
+- 🌐 GÜNCELLENİYOR!
 
 *Yasal Uyarı: Bu portal üzerinde paylaşılan içerikler Marmara Games'e aittir. Topluluk sohbet kuralları için sitemizi ziyaret edin.*
+@bro635756-spec
