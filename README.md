@@ -10,6 +10,7 @@
 <video src="LICENSE.mp4" width="100%" controls></video>
 
 
+[Tüm Projeyi ZIP Olarak İndir](https://github.com/bro635756-spec/marmaragames)
 
 
 
