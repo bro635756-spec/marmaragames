@@ -1,5 +1,6 @@
 ![LOGO](logo.jpg)
-![VİDEO](LICENSE.mp4)
+<video src="LICENSE.mp4" width="100%" controls></video>
+
 
 
 
