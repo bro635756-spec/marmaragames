@@ -1,6 +1,6 @@
 ![LOGO](logo.jpg)
 
-[📥 Tüm Proje Dosyalarını ZIP Olarak İndir](https://github.com/bro635756-spec/marmaragames/sourcecdo.zip)
+[sourcecdo.zip dosyasını indir](https://github.com/username/repository/raw/branch/sourcecdo.zip)
 
 
 <video src="LICENSE.mp4" width="100%" controls></video>
